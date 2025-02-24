@@ -699,4 +699,7 @@ h2 {
   .fixed-button {
     padding: 0.4em;
   }
+  .overlay-image img {
+    height: 400px;
+  }
 }
