@@ -45,7 +45,7 @@ const PuzzleQuestionForm: React.FC<Props> = ({ activeQuestion, setAnswer, answer
                 {activeQuestion.question}
             </p>
 
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}>
                 {activeQuestion.type === "text" && (
                     <input
                         type="text"

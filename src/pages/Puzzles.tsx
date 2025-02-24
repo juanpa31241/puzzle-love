@@ -31,11 +31,11 @@ const Puzzles: React.FC = () => {
 
     const onConfirm = () => {
         puzzles.forEach((e) => {
-            const updatedQuestions = e.questions.map((q) =>
-                q.id === e.id
-                    ? { ...q, answered: false, active: true } // Actualiza la pregunta actual
-                    : q
-            );
+            const updatedQuestions = e.questions.map(q => ({
+                ...q,
+                answered: false,
+                active: true
+            }));
 
             const updatedPuzzle = {
                 ...e,
