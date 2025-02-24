@@ -36,6 +36,7 @@ const PuzzleBoard: React.FC = () => {
     const active_question = selectedPuzzle?.questions.find(e => e.active)
     let updatedPuzzle: Puzzle;
     const onSubmit = (form_answer: string) => {
+        console.log(form_answer)
         form_answer = form_answer.toLowerCase()
         if (form_answer === active_question?.answer && selectedPuzzle) {
             const updatedQuestions = selectedPuzzle.questions.map((q) =>

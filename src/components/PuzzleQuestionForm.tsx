@@ -1,14 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import { PuzzleQuestion } from "../types";
 import { useStateContext } from "../context/StateContext";
 import { themeConfig } from "../data";
 
-
 interface Props {
     activeQuestion: PuzzleQuestion | null;
-    setAnswer: React.Dispatch<React.SetStateAction<string>>; // Corregido
-    answer: string
+    setAnswer: React.Dispatch<React.SetStateAction<string>>;
+    answer: string;
     onSubmit: (answer: string) => void;
 }
 
@@ -21,7 +22,14 @@ const PuzzleQuestionForm: React.FC<Props> = ({ activeQuestion, setAnswer, answer
         e.preventDefault();
         onSubmit(answer);
         setAnswer("");
+    };
 
+    const handleDateChange = (date: Date) => {
+        const correctedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000); // Corregir el desfase de la zona horaria
+        const formattedDate = `${correctedDate.getDate().toString().padStart(2, "0")}-${(correctedDate.getMonth() + 1)
+            .toString()
+            .padStart(2, "0")}`;
+        setAnswer(formattedDate);
     };
 
     return (
@@ -36,7 +44,6 @@ const PuzzleQuestionForm: React.FC<Props> = ({ activeQuestion, setAnswer, answer
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                 borderRadius: "16px",
                 padding: "5px",
-                width: "100%",
                 maxWidth: "500px",
                 margin: "0 auto",
             }}
@@ -64,25 +71,31 @@ const PuzzleQuestionForm: React.FC<Props> = ({ activeQuestion, setAnswer, answer
                 )}
 
                 {activeQuestion.type === "date" && (
-                    <input
-                        type="date"
-                        value={answer}
-                        onChange={(e) => setAnswer(e.target.value)}
-                        style={{
-                            width: "100%",
-                            padding: "12px",
-                            border: "1px solid #ccc",
-                            fontSize: "16px",
-                            outline: "none",
+                    <Calendar
+                        onChange={(date) => handleDateChange(date as Date)}
+                        value={answer ? new Date(2000, parseInt(answer.split("-")[1]) - 1, parseInt(answer.split("-")[0])) : null}
+                        maxDetail="month"
+                        minDetail="month"
+                        locale="es-ES"
+                        tileClassName={({ date }) => {
+                            const selectedDate = answer
+                                ? new Date(2000, parseInt(answer.split("-")[1]) - 1, parseInt(answer.split("-")[0]))
+                                : null;
+                            return selectedDate && date.getDate() === selectedDate.getDate() && date.getMonth() === selectedDate.getMonth()
+                                ? "react-calendar__tile--active"
+                                : "";
                         }}
                     />
+
                 )}
 
                 <motion.button
-                    whileTap={{ scale: 0.9, transition: { duration: 0 } }} style={{
+                    whileTap={{ scale: 0.9, transition: { duration: 0 } }}
+                    style={{
                         background: themeConfig[theme].gradient,
                     }}
-                    whileHover={{ scale: 1.1, transition: { duration: 0.2 } }} className="back-button"
+                    whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+                    className="back-button"
                 >
                     Enviar
                 </motion.button>
