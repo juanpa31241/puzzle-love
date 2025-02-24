@@ -13,7 +13,7 @@ export const imageDetailsData = [
       {
         id: "1",
         question: "¿Cúando es nuestro aniversario?",
-        answer: "2024-02-24",
+        answer: "2024-02-20",
         type: "date",
         answered: false,
         active: true,

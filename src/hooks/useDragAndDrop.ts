@@ -148,6 +148,7 @@ export const useDragAndDrop = (
         shoot(originX, originY);
       }
     }
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     setActiveId(null); // Reset the active ID.
   };

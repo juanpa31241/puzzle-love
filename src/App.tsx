@@ -19,9 +19,20 @@ const App: React.FC = () => {
         }).then(() => {
             console.log("Motor de partículas inicializado");
         });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
 
+        const handleScroll = () => window.scrollTo(0, 0);
+
+        // Forzar el scroll al inicio
+        handleScroll();
+
+        // Evitar que el usuario pueda hacer scroll
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
+
 
     const IMAGEKIT_URL = "https://ik.imagekit.io/whmaz07lo";
 
