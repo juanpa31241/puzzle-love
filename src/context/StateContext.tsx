@@ -13,6 +13,7 @@ interface ContextProps {
     updatePuzzles: (id: string, state: Puzzle) => void;
     theme: Theme;
     setTheme: Dispatch<SetStateAction<Theme>>
+    resetPuzzles: () => void;
 }
 
 const StateContext = createContext<ContextProps | undefined>(undefined);
@@ -37,9 +38,14 @@ export const StateProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setPuzzles(prev => prev.map(p => p.id === id ? { ...p, ...newState } : p));
 
     };
+    const resetPuzzles = () => {
+        setPuzzles(imageDetailsData)
+        localStorage.setItem("puzzles", JSON.stringify(imageDetailsData));
+
+    }
     return (
         <StateContext.Provider value={{
-            selectedPuzzle, setSelectedPuzzle, puzzles, updatePuzzles, init, setInit, theme, setTheme
+            selectedPuzzle, setSelectedPuzzle, puzzles, updatePuzzles, init, setInit, theme, setTheme, resetPuzzles
         }}>
             {children}
         </StateContext.Provider>

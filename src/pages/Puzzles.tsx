@@ -14,7 +14,7 @@ import { themeConfig } from "../data";
 
 const Puzzles: React.FC = () => {
     const navigate = useNavigate();
-    const { setSelectedPuzzle, puzzles, setInit, updatePuzzles } = useStateContext();
+    const { setSelectedPuzzle, puzzles, setInit, resetPuzzles } = useStateContext();
     const matches = useMediaQuery("(max-width: 768px)");
     const [visible, setVisible] = useState(false);
     const { theme } = useStateContext();
@@ -30,26 +30,7 @@ const Puzzles: React.FC = () => {
     };
 
     const onConfirm = () => {
-        puzzles.forEach((e) => {
-            const updatedQuestions = e.questions.map(q => ({
-                ...q,
-                answered: false,
-                active: true
-            }));
-
-            const updatedPuzzle = {
-                ...e,
-                clues: 5,
-                boardSlots: {},
-                questions: updatedQuestions,
-                completed: false,
-                pool: []
-            };
-            updatePuzzles(e.id, updatedPuzzle);
-        });
-
-        window.localStorage.clear();
-        window.localStorage.setItem("puzzles", JSON.stringify(puzzles));
+        resetPuzzles()
         setVisible(false);
         setInit(false);
     };
