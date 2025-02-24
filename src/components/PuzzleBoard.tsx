@@ -11,7 +11,7 @@ import { puzzleSize, themeConfig } from "../data";
 import { Puzzle } from "../types";
 import AnimatedTitle from "./AnimatedTitle";
 import Alert from "./Alert";
-import { restrictToWindowEdges, restrictToVerticalAxis, restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
+import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 import { useDragAndDrop } from "../hooks/useDragAndDrop";
 import { usePuzzleInitialization } from "../hooks/usePuzzleInitiation";
 import { useConfetti } from "../hooks/useConfetti";
@@ -221,10 +221,7 @@ const PuzzleBoard: React.FC = () => {
         };
     }, [selectedPuzzle, setCompleted]);
 
-    const windowTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
 
-    }
     return (
         <DndContext onDragStart={handleDragStart} collisionDetection={rectIntersection} onDragEnd={handleDragEnd} modifiers={[restrictToFirstScrollableAncestor]} >
             {matches && <h1 className="main-title" style={{
